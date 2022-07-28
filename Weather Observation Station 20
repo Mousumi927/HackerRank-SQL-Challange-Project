@@ -1,0 +1,14 @@
+**//https://www.hackerrank.com/challenges/weather-observation-station-20/problem//**
+
+Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to 4 decimal places.
+
+Solution:
+
+SET @row := 0;
+SET @count = (SELECT COUNT(*) FROM Station);
+
+select ROUND(stn1.LAT_N, 4) from Station stn1
+inner join
+(SELECT @row := @row + 1 As 'Rank', stnRowNum.*
+FROM Station stnRowNum order by stnRowNum.LAT_N ) stn2
+ON stn1.Id = stn2.id and stn2.Rank = ROUND(@count/2);
